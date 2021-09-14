@@ -233,6 +233,7 @@ class JdSeckill(object):
             'Host': 'marathon.jd.com',
         }
         resp = self.session.post(url=url, data=data, headers=headers)
+        logger.info('初始化信息结果{}'.format(resp))
         return parse_json(resp.text)
 
     def _get_seckill_order_data(self):
@@ -242,8 +243,11 @@ class JdSeckill(object):
         logger.info('生成提交抢购订单所需参数...')
         # 获取用户秒杀初始化信息
         self.seckill_init_info[self.sku_id] = self._get_seckill_init_info()
+        logger.info('初始化信息完成...')
         init_info = self.seckill_init_info.get(self.sku_id)
         default_address = init_info['addressList'][0]  # 默认地址dict
+        logger.info('默认地址：{}'.format(default_address))
+
         invoice_info = init_info.get('invoiceInfo', {})  # 默认发票信息dict, 有可能不返回
         token = init_info['token']
         data = {

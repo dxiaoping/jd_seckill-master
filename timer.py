@@ -19,3 +19,4 @@ class Timer(object):
                 break
             else:
                 time.sleep(self.sleep_interval)
+                logger.info('时间未到达，等待中……')
